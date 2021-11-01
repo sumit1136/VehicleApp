@@ -13,7 +13,6 @@
             <div class="nav1-inner">
                 <ul style="list-style-type:none;">
                     <li><a href="/add/">Add vehicle</a></li>
-                    <li><a href="/details/">Details</a></li>
                 </ul>
             </div>
         </div>
@@ -56,7 +55,7 @@
                                 <form action="/delete/" method="post"  class="d-inline">
                                     {% csrf_token %}
                                     <input type="hidden" value="{{a.id}}" name="id">
-                                    <input type="submit" class="btn btn-danger" value="Delete">
+                                    <input type="submit" class="btn btn-danger" value="Delete" onclick="return confirm('Are you sure want to delete?')">
                                 </form>
                             </td>
                         </tr>

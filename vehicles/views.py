@@ -6,10 +6,7 @@ from vehicles.models import Van
 from django.views import View
 
 # Create your views here.
-
-class index(View):
-    def get(self, request):
-        return HttpResponse("Hello World.")    
+  
 
 class vehList(TemplateView):
     template_name = 'vehicles/list.html'
@@ -51,16 +48,18 @@ class vehUpdate(View):
             speed = request.POST.get('speed')
             avgSpeed = request.POST.get('avgSpeed')
             enStatus = request.POST.get('enStatus')
-            if not enStatus:
-                print("enStatus required")
-                messages.error(request, "Engine status is required")
-                return redirect('update')
             flLevel = request.POST.get('flLevel')
+            temperature = request.POST.get('temperature')
             if int(flLevel)>100 or int(flLevel)<0:
                 f = Van.objects.filter(id=id).first()
+                f.company = company
+                f.model = model
+                f.speed = speed
+                f.avgSpeed = avgSpeed
+                f.enStatus = enStatus
+                f.temperature = temperature
                 messages.error(request, "Fuel level must from 0 to 100")
                 return render(request, "vehicles/update.html",{"van": f})
-            temperature = request.POST.get('temperature')
             car = Van.objects.filter(id=id).first()
             car.company = company
             car.model = model
