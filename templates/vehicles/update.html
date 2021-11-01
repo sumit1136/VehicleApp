@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Update {% endblock %}
+{% block content %}
+
+<div class="container h-100">
+    <div class="row justify-content-center h-100">
+        <div class="col-md-2 nav1">
+            <div class="row">
+                <div class="text-center logo">
+                    <img src="{% static 'images/mercedes.png' %}" alt="Logo" height="100px" width="100px">
+                </div>
+                <div class="nav1-inner">
+                    <ul style="list-style-type:none;">
+                        <li><a href="/add/">Add vehicle</a></li>       
+                        <li><a href="/list/">List vehicle</a></li>
+                        <li><a href="/details/">Details</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-10 right1">
+            <div class="row top1">
+                <div>
+                    <span class="dot" style="float: right; margin-top: 20px;"></span>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
+                <h1 class="text-center">Update Vehicle</h1>
+            </div>
+            <div class="message text-center text-danger">
+                {% for message in messages %}
+                <h3>{{message}}</h3>
+                {% endfor %}
+            </div>
+            <div class="row justify-content-md-center">
+                <form action="/update/" method="post" class="col col-md-5" style="background-color: #b7c3c4; border-radius: 20px; padding: 20px;">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6 left-form">
+                            <div class="form-group mb-1">
+                                <label for="id" class="form-label">Id:</label>
+                                <input type="text" class="form-control" placeholder="Enter id, it should be unique" value="{{van.id}}" disabled>
+                            </div>
+                            <input type="hidden" value="{{van.id}}" name="id">
+                            <div class="form-group mb-1">
+                                <label for="company" class="form-label">Company:</label>
+                                <input type="text" class="form-control" onfocus="this.value = ''" placeholder="Enter Company Name" name="company" value="{{van.company}}">
+                            </div>
+                            <div class="form-group mb-1">
+                                <label for="model" class="form-label">Model:</label>
+                                <input type="text" class="form-control" onfocus="this.value = ''" placeholder="Enter model" name="model" value="{{van.model}}">
+                            </div>
+                            <input type="hidden" value="True" name="st">
+                            <div class="form-group mb-1">
+                                <label for="company" class="form-label">Speed(km/h):</label>
+                                <input type="text" class="form-control" onfocus="this.value = ''" placeholder="Enter Speed" name="speed" value="{{van.speed}}">
+                            </div>
+                        </div>
+                        <div class="col-md-6 right-form">
+                            <div class="form-group mb-1">
+                                <label for="company" class="form-label">Average Speed(km/h):</label>
+                                <input type="text" class="form-control" onfocus="this.value = ''" placeholder="Enter Average Speed" name="avgSpeed" value="{{van.avgSpeed}}">
+                            </div>
+                            <div class="form-group mb-1">
+                                <label for="company" class="form-label">Engine Status:</label>
+                                <select name="enStatus" id="enStatus" class="form-control" required>
+                                    {% if not van.enStatus %}
+                                    <option value="" selected disabled hidden>Choose here</option>
+                                    {% endif %}
+                                    <option value="Working">Working</option>
+                                    <option value="Not working">Not Working</option>
+                                </select>
+                            </div>
+                            <div class="form-group mb-1">
+                                <label for="company" class="form-label">Fuel Level:</label>
+                                <input type="number" class="form-control" onfocus="this.value = ''" placeholder="Fuel Level in %" name="flLevel" value="{{van.flLevel}}">
+                            </div>
+                            <div class="form-group mb-1">
+                                <label for="company" class="form-label">Temperature:</label>
+                                <input type="number" class="form-control" onfocus="this.value = ''" placeholder="Enter Temperature" name="temperature" value="{{van.temperature}}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <input type="submit" class="btn btn-primary mt-2" value="Submit">
+                    </div>
+                </form>
+            </div>     
+        </div>
+    </div>
+</div>
+
+{% endblock %}

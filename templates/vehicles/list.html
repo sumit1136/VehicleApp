@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} List {% endblock %}
+{% block content %}
+
+<div class="container h-100">
+    <div class="row justify-content-center h-100">
+        <div class="col-md-2 nav1">
+            <div class="text-center logo">
+                <img src="{% static 'images/mercedes.png' %}" alt="Logo" height="100px" width="100px">
+            </div>
+            <div class="nav1-inner">
+                <ul style="list-style-type:none;">
+                    <li><a href="/add/">Add vehicle</a></li>
+                    <li><a href="/details/">Details</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-10 right1">
+            <div class="row top1">
+                <div>
+                    <span class="dot" style="float: right; margin-top: 20px;"></span>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
+                <h1 class="text-center">Vehicle List</h1>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+                <div>
+                    <table class="table table-striped">
+                        <tr>
+                            <th>Id</th>
+                            <th>Company</th>
+                            <th>Model</th>
+                            <th>Actions</th>
+                        </tr>
+                        
+                        {% for a in van%}
+                        <tr>
+                            <td>{{a.id}}</td>
+                            <td>{{a.company}}</td>
+                            <td>{{a.model}}</td>
+                            <td>
+                                <form action="/update/" method="post"  class="d-inline">
+                                    {% csrf_token %}
+                                    <input type="hidden" value="{{a.id}}" name="id">
+                                    <input type="hidden" value="False" name="st">
+                                    <input type="submit" value="Edit" class="btn btn-primary">
+                                </form>
+                                <form action="/details/" method="post"  class="d-inline">
+                                    {% csrf_token %}
+                                    <input type="hidden" value="{{a.id}}" name="id">
+                                    <input type="submit" class="btn btn-info" value="View">
+                                </form>
+                                <form action="/delete/" method="post"  class="d-inline">
+                                    {% csrf_token %}
+                                    <input type="hidden" value="{{a.id}}" name="id">
+                                    <input type="submit" class="btn btn-danger" value="Delete">
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
